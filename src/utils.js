@@ -1,4 +1,5 @@
-// simple utils for loading assets and getting input
+// simple utils for loading assets 
+// and getting input from a gamepad or keyboard
 
 const window = globalThis;
 

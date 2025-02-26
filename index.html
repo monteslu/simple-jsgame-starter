@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Canvas with Aspect Ratio</title>
+  <title>Simple jsgame starter</title>
   <style>
     /* Ensure the body and html fill the entire window */
     html, body {
@@ -31,19 +31,10 @@
   </style>
 </head>
 <body>
-  
-  <button id="start-button">Start Game</button>
   <!-- Internal aspect ratio 4:3 -->
   <canvas id="game-canvas" width="640" height="480" style="display: none;"></canvas>
   <script>
     const canvas = document.querySelectorAll('canvas')[0];
-    const startButton = document.getElementById('start-button');
-    // have to click a button if you want audio to work in browser
-    startButton.addEventListener('click', () => {
-      canvas.style.display = 'block';
-      startButton.style.display = 'none';
-    });
-    
     const ctx = canvas.getContext("2d");
     // Disable smoothing for retro pixel art
     ctx.imageSmoothingEnabled = false;

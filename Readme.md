@@ -21,4 +21,8 @@ A simple starter using [vite](https://vitejs.dev/) for creating a javascript gam
 ## Controls
 
 - gamepad arrows to move and south button to play sound
-- keyboard arrows to move and Z key to play sound
+- keyboard arrows to move and Z key to play sound if no gamepad is connected
+
+## More information
+
+- [Developing games for jsgamelauncher](https://github.com/monteslu/jsgamelauncher/blob/main/docs/developing-games.md)
