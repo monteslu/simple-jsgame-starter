@@ -14,7 +14,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #000; /* Optional background */
+      background-color: #222; /* Optional background */
       overflow: hidden;
     }
 
@@ -32,9 +32,9 @@
 </head>
 <body>
   <!-- Internal aspect ratio 4:3 -->
-  <canvas id="game-canvas" width="640" height="480" style="display: none;"></canvas>
+  <canvas id="game-canvas" width="640" height="480"></canvas>
   <script>
-    const canvas = document.querySelectorAll('canvas')[0];
+    const canvas = document.getElementById('game-canvas');
     const ctx = canvas.getContext("2d");
     // Disable smoothing for retro pixel art
     ctx.imageSmoothingEnabled = false;
