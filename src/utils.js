@@ -1,5 +1,11 @@
-// simple utils for loading assets 
-// and getting input from a gamepad or keyboard
+/** 
+
+Simple utils for loading assets
+and getting input from a gamepad or keyboard
+
+Copyright 2025 Luis Montes. Licensed under the MIT License.
+
+**/
 
 const window = globalThis;
 
@@ -139,7 +145,8 @@ window.addEventListener('keyup', (e) => {
 // if there's a gamepad, player 1 is the gamead and player 2 is the keyboard
 // if there's no gamepad, player 1 is the keyboard
 export function getInput() {
-  const gamepads = navigator.getGamepads();
+  let gamepads = navigator.getGamepads();
+  gamepads = gamepads.filter((gp) => gp && (gp.mapping === 'standard' || gp.mapping === 'xbox'));
   const players = [];
   gamepads.forEach((gp) => {
     if (gp) {

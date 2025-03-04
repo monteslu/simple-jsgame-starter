@@ -1,5 +1,10 @@
-// Simple jsgame starter
-// A simple starter using vite for creating a javascript game that works in web and jsgamelauncher
+/** 
+
+Simple jsgame starter
+
+A simple starter using vite for creating a javascript game that works in web and jsgamelauncher
+
+**/
 
 import { createResourceLoader, drawLoadingScreen, playSound, getInput } from './utils.js';
 
