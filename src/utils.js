@@ -129,8 +129,30 @@ function getDefaultBtn() {
   };
 }
 
+// allows games to override the default key mapping
+export const KEYMAP = {
+  'DPAD_UP': 'ArrowUp',
+  'DPAD_DOWN': 'ArrowDown',
+  'DPAD_LEFT': 'ArrowLeft',
+  'DPAD_RIGHT': 'ArrowRight',
+  'BUTTON_SOUTH': 'z',
+  'BUTTON_EAST': 'x',
+  'BUTTON_WEST': 'a',
+  'BUTTON_NORTH': 's',
+  'LEFT_SHOULDER': 'q',
+  'RIGHT_SHOULDER': 'r',
+  'LEFT_TRIGGER': 'w',
+  'RIGHT_TRIGGER': 'e',
+  'SELECT': 'Shift',
+  'START': 'Enter',
+  'GUIDE': 'Escape',
+  'LEFT_STICK': 'c',
+  'RIGHT_STICK': 'v',
+};
+
 const keys = {};
 window.addEventListener('keydown', (e) => {
+  console.log('keydown', e.key);
   keys[e.key] = keys[e.key] || getDefaultBtn();
   keys[e.key].pressed = true;
   keys[e.key].value = 1;
@@ -181,23 +203,23 @@ export function getInput() {
   players.push({
     type: 'keyboard',
     name: 'keyboard',
-    DPAD_UP: keys['ArrowUp'] || getDefaultBtn(),
-    DPAD_DOWN: keys['ArrowDown'] || getDefaultBtn(),
-    DPAD_LEFT: keys['ArrowLeft'] || getDefaultBtn(),
-    DPAD_RIGHT: keys['ArrowRight'] || getDefaultBtn(),
-    BUTTON_SOUTH: keys['z'] || getDefaultBtn(),
-    BUTTON_EAST: keys['x'] || getDefaultBtn(),
-    BUTTON_WEST: keys['a'] || getDefaultBtn(),
-    BUTTON_NORTH: keys['s'] || getDefaultBtn(),
-    LEFT_SHOULDER: keys['q'] || getDefaultBtn(),
-    RIGHT_SHOULDER: keys['r'] || getDefaultBtn(),
-    LEFT_TRIGGER: keys['e'] || getDefaultBtn(),
-    RIGHT_TRIGGER: keys['r'] || getDefaultBtn(),
-    SELECT: keys['Shift'] || getDefaultBtn(),
-    START: keys['Enter'] || getDefaultBtn(),
-    GUIDE: keys['Escape'] || getDefaultBtn(),
-    LEFT_STICK: keys['c'] || getDefaultBtn(),
-    RIGHT_STICK: keys['v'] || getDefaultBtn(),
+    DPAD_UP: keys[KEYMAP.DPAD_UP] || getDefaultBtn(),
+    DPAD_DOWN: keys[KEYMAP.DPAD_DOWN] || getDefaultBtn(),
+    DPAD_LEFT: keys[KEYMAP.DPAD_LEFT] || getDefaultBtn(),
+    DPAD_RIGHT: keys[KEYMAP.DPAD_RIGHT] || getDefaultBtn(),
+    BUTTON_SOUTH: keys[KEYMAP.BUTTON_SOUTH] || getDefaultBtn(),
+    BUTTON_EAST: keys[KEYMAP.BUTTON_EAST] || getDefaultBtn(),
+    BUTTON_WEST: keys[KEYMAP.BUTTON_WEST] || getDefaultBtn(),
+    BUTTON_NORTH: keys[KEYMAP.BUTTON_NORTH] || getDefaultBtn(),
+    LEFT_SHOULDER: keys[KEYMAP.LEFT_SHOULDER] || getDefaultBtn(),
+    RIGHT_SHOULDER: keys[KEYMAP.RIGHT_SHOULDER] || getDefaultBtn(),
+    LEFT_TRIGGER: keys[KEYMAP.LEFT_TRIGGER] || getDefaultBtn(),
+    RIGHT_TRIGGER: keys[KEYMAP.RIGHT_TRIGGER] || getDefaultBtn(),
+    SELECT: keys[KEYMAP.SELECT] || getDefaultBtn(),
+    START: keys[KEYMAP.START] || getDefaultBtn(),
+    GUIDE: keys[KEYMAP.GUIDE] || getDefaultBtn(),
+    LEFT_STICK: keys[KEYMAP.LEFT_STICK] || getDefaultBtn(),
+    RIGHT_STICK: keys[KEYMAP.RIGHT_STICK] || getDefaultBtn(),
     LEFT_STICK_X: 0,
     LEFT_STICK_Y: 0,
     RIGHT_STICK_X: 0,
