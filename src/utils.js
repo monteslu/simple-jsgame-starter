@@ -10,27 +10,91 @@ Copyright 2025 Luis Montes. Licensed under the MIT License.
 const window = globalThis;
 
 let audioContext;
-
-export async function loadSound(url) {
-  if (!audioContext) {
-    audioContext = new AudioContext();
+let audioEnabled = false;
+try {
+  audioContext = new AudioContext();
+  if (audioContext.state = 'running') {
+    audioEnabled = true;
   }
-  const soundBuffer = await fetch(url).then((res) => res.arrayBuffer());
-
-  const audioBuffer = await audioContext.decodeAudioData(soundBuffer);
-  return audioBuffer;
+  console.log('audio context created', audioContext.state);
+} catch (e) {
+  console.info('audio context requires user interaction to enable');
 }
 
-export function playSound(audioBuffer, loop = false) {
-  if (!audioBuffer) {
+export async function loadSound(url) {
+  const dataBuffer = await fetch(url).then(res => res.arrayBuffer());
+  dataBuffer._decoded = false;
+  if (audioContext) {
+    console.log('decoding audio data', url, audioContext.state);
+    dataBuffer._audioBuffer = await audioContext.decodeAudioData(dataBuffer);
+    dataBuffer._decoded = true;
+  }
+  return dataBuffer;
+}
+
+function enableAudio() {
+  console.log('enabling audio');
+  if (!audioEnabled) {
+    audioEnabled = true;
+    if (audioContext) {
+      audioContext.resume();
+    } else {
+      audioContext = new AudioContext();
+    }
+  }
+  removeAllGestureListeners();
+}
+
+function setupGestureListeners() {
+  // Mouse events
+  document.addEventListener('click', enableAudio, { once: true });
+  document.addEventListener('mousedown', enableAudio, { once: true });
+
+  // Touch events
+  document.addEventListener('touchstart', enableAudio, { once: true });
+  document.addEventListener('touchend', enableAudio, { once: true });
+
+  // Keyboard events
+  document.addEventListener('keydown', enableAudio, { once: true });
+
+  // Scroll event
+  document.addEventListener('scroll', enableAudio, { once: true });
+}
+
+function removeAllGestureListeners() {
+  document.removeEventListener('click', enableAudio);
+  document.removeEventListener('mousedown', enableAudio);
+  document.removeEventListener('touchstart', enableAudio);
+  document.removeEventListener('touchend', enableAudio);
+  document.removeEventListener('keydown', enableAudio);
+  document.removeEventListener('scroll', enableAudio);
+}
+
+// Set up listeners when page loads
+setupGestureListeners();
+
+
+export function playSound(dataBuffer, loop = false) {
+  if (!dataBuffer || !audioEnabled) {
     return;
   }
-  if (!audioContext) {
-    audioContext = new AudioContext();
-  }
-  const bufferSource = audioContext.createBufferSource();
-  bufferSource.buffer = audioBuffer;
 
+  if (!dataBuffer._decoded) {
+    if (!dataBuffer._decoding) {
+      dataBuffer._decoding = true;
+      audioContext.decodeAudioData(dataBuffer).then((audioBuffer) => {
+        dataBuffer._audioBuffer = audioBuffer;
+        dataBuffer._decoded = true;
+        dataBuffer._decoding = false;
+        playSound(dataBuffer, loop);
+      });
+    }
+    return;
+  }
+
+  const bufferSource = audioContext.createBufferSource();
+  bufferSource.buffer = dataBuffer._audioBuffer;
+  
   bufferSource.connect(audioContext.destination);
   if (loop) {
     bufferSource.loop = true;
