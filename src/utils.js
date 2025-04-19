@@ -216,7 +216,6 @@ export const KEYMAP = {
 
 const keys = {};
 window.addEventListener('keydown', (e) => {
-  console.log('keydown', e.key);
   keys[e.key] = keys[e.key] || getDefaultBtn();
   keys[e.key].pressed = true;
   keys[e.key].value = 1;

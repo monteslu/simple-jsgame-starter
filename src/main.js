@@ -8,6 +8,14 @@ A simple starter using vite for creating a javascript game that works in web and
 
 import { createResourceLoader, drawLoadingScreen, playSound, getInput } from './utils.js';
 
+// uncomment and `npm install vibe-eyes-client` to use the VibeEyesClient
+// import { VibeEyesClient } from 'vibe-eyes-client';
+
+// const vibeEyesClient = new VibeEyesClient();
+// document.addEventListener('click', () => {
+//   vibeEyesClient.toggleSvgDisplay();
+// });
+
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 
