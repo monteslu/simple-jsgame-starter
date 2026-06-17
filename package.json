@@ -2,13 +2,16 @@
   "name": "simple-jsgame-starter",
   "version": "0.1.0",
   "type": "module",
+  "main": "dist/game.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "pack": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^6.0.5"
+    "fflate": "^0.8.3",
+    "vite": "^8.0.16"
   },
   "repository": {
     "type": "git",

@@ -60,6 +60,16 @@
     // Redraw the canvas on resize
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas(); // Initial resize
+
+    // Click the canvas to toggle fullscreen (browser only; in a libretro
+    // frontend the player uses the frontend's own fullscreen hotkey).
+    canvas.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        canvas.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    });
   </script>
   <script src="./src/main.js" type="module"></script>
 </body>
