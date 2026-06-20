@@ -74,7 +74,7 @@ function removeAllGestureListeners() {
 setupGestureListeners();
 
 
-export function playSound(dataBuffer, loop = false) {
+export function playSound(dataBuffer, loop = false, volume = 1) {
   if (!dataBuffer || !audioEnabled) {
     return;
   }
@@ -86,7 +86,7 @@ export function playSound(dataBuffer, loop = false) {
         dataBuffer._audioBuffer = audioBuffer;
         dataBuffer._decoded = true;
         dataBuffer._decoding = false;
-        playSound(dataBuffer, loop);
+        playSound(dataBuffer, loop, volume);
       });
     }
     return;
@@ -94,14 +94,21 @@ export function playSound(dataBuffer, loop = false) {
 
   const bufferSource = audioContext.createBufferSource();
   bufferSource.buffer = dataBuffer._audioBuffer;
-  
-  bufferSource.connect(audioContext.destination);
+
+  // Route through a GainNode for volume control (standard Web Audio pattern):
+  // source -> gain -> destination. volume is a 0..1 multiplier.
+  const gainNode = audioContext.createGain();
+  gainNode.gain.value = volume;
+  bufferSource.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
   if (loop) {
     bufferSource.loop = true;
   }
   bufferSource.start();
   bufferSource.onended = () => {
     bufferSource.disconnect();
+    gainNode.disconnect();
   };
   return bufferSource;
 }
